@@ -67,8 +67,8 @@ def calc_mst_cost():
     vertices = pd.concat([edges_df['v1'], 
                           edges_df['v2']]).unique()
 
-    # init_vert = np.random.choice(vertices)
-    init_vert = 1
+    init_vert = np.random.choice(vertices)
+    # init_vert = 1
 
     vertices = set(vertices)
 
@@ -78,17 +78,21 @@ def calc_mst_cost():
     e_new = set([])
 
     while v_new != vertices:
-        query_df = edges_df[edges_df.v1.isin(v_new) & ~edges_df.v2.isin(v_new)]
+        query_df = edges_df[(edges_df.v1.isin(v_new) & ~edges_df.v2.isin(v_new)) | 
+                            (edges_df.v2.isin(v_new) & ~edges_df.v1.isin(v_new))]
         sorted_q_df = query_df.sort(['cost'])
         
         try:
             row_to_add = sorted_q_df.iloc[0]
+            vertex_to_add = (row_to_add['v1'] 
+                             if row_to_add['v1'] not in v_new 
+                             else row_to_add['v2'])
             edge_to_add = edge(row_to_add['v1'],
                                row_to_add['v2'],
                                row_to_add['cost'])
         
             e_new.add(edge_to_add)
-            v_new.add(edge_to_add.get_end_vert())
+            v_new.add(vertex_to_add)
 
         except IndexError:
             print 'Query for v1 in v_new and v2 not in v_new returned no results.'
