@@ -44,3 +44,5 @@ class UnionFind(object):
                 self.weights[heaviest] += self.weights[r]
                 self.parents[r] = heaviest
         
+    def numleaders(self):
+        return len(set(self.parents.values()))
