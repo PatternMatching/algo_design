@@ -79,10 +79,14 @@ def two():
     Calculates largest value k such that there is a k-clustering
     with spacing >= 3
     """
+    
+    # Read in the file, converting to str of binary number
     vert_df = pd.read_csv('clustering_big.txt',
                           header=0,
                           names=['vid'],
                           converters = {'vid' : strip})
+
+    
                           
     
 if __name__ == '__main__':
