@@ -6,9 +6,12 @@ given a set of edges and associated costs
 """
 class UnionFind(object):
 
-    def __init__(self):
+    def __init__(self, init_leaders):
+        self.init_leaders = init_leaders
         self.weights = {}
         self.parents = {}
+        # Initialize the structure
+        map(self.__getitem__, init_leaders)
 
     def __getitem__(self, object):
         """Find and return the name of the set containing the object"""
@@ -45,4 +48,4 @@ class UnionFind(object):
                 self.parents[r] = heaviest
         
     def numleaders(self):
-        return len(set(self.parents.values()))
+        return len(set([self.__getitem__(x) for x in self.init_leaders]))
