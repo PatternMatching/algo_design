@@ -15,6 +15,8 @@ K = 4
 def hamming_dist(s1, s2):
     return np.sum([c1 != c2 for c1, c2 in izip(s1, s2)])
 
+def gen_nodes_w_hd_lte
+
 def one():
     mst = set([])
     edge_df = pd.read_csv('clustering1.txt',
