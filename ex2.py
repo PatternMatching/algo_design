@@ -87,11 +87,31 @@ def two():
                           header=0,
                           names=['vid'],
                           converters = {'vid' : strip})
+    
+    vertices = vert_df['vid'].unique()
+    uf = UnionFind(vertices)
+    to_visit = set(vertices)
 
-    
-                          
-    
+    # 
+    while len(to_visit) > 0:
+        # Every iteration of the while loop corresponds to 
+        # pulling off a new vertex label and attempting to merge
+        # with all other vertices connected at cost <= 2
+        this_v = to_visit.pop()
+
+        nearby_v = nearby(this_v, to_visit)
+
+        for v in nearby_v:
+            l1 = uf[this_v]
+            l2 = uf[v]
+            if l1 != l2:
+                uf.union(this_v, v)
+                to_visit.remove(v)
+
+    return uf.numleaders()
+        
 if __name__ == '__main__':
     mks = one()
-    two()
+    n_clust = two()
     print mks
+    print n_clust
