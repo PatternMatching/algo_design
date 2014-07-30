@@ -15,8 +15,6 @@ K = 4
 def hamming_dist(s1, s2):
     return np.sum([c1 != c2 for c1, c2 in izip(s1, s2)])
 
-def gen_nodes_w_hd_lte
-
 def one():
     mst = set([])
     edge_df = pd.read_csv('clustering1.txt',
@@ -75,6 +73,18 @@ def strip(text):
         return text.replace(" ","")
     except AttributeError:
         return text
+
+def nearby(v, v_set):
+    """
+    Returns the subset of v_set that are within a Hamming distance
+    of 2 or less
+    """
+    to_return = set([])
+    for other_v in v_set:
+        if hamming_dist(v, other_v) <= 2:
+            to_return.add(other_v)
+    
+    return to_return
 
 def two():
     """ 
