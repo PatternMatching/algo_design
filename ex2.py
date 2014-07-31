@@ -15,6 +15,9 @@ K = 4
 def hamming_dist(s1, s2):
     return np.sum([c1 != c2 for c1, c2 in izip(s1, s2)])
 
+def hamming_dist2(s1, s2):
+    return bin(int(s1,2) ^ int(s2,2)).count("1")
+
 def one():
     mst = set([])
     edge_df = pd.read_csv('clustering1.txt',
@@ -81,7 +84,7 @@ def nearby(v, v_set):
     """
     to_return = set([])
     for other_v in v_set:
-        if hamming_dist(v, other_v) <= 2:
+        if hamming_dist2(v, other_v) <= 2:
             to_return.add(other_v)
     
     return to_return
